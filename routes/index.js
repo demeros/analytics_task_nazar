@@ -1,9 +1,14 @@
-const express = require('express');
-const router = express.Router();
+'use strict';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const eventsRoutes = require('./events');
+const analyticsRoutes = require('./analytics');
 
-module.exports = router;
+//@TODO it's make sense to add some kind of auto-loader to avoid manual routs registration
+const register = ({ expressApp, config, logger, dbPool }) => {
+    eventsRoutes.register({ expressApp, config, logger, dbPool });
+    analyticsRoutes.register({ expressApp, config, logger, dbPool });
+};
+
+module.exports = {
+    register
+};
